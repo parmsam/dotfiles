@@ -14,14 +14,15 @@ ldpks <- function() {
 R.version.string
 ldpks()
 
-search_google <- function(search_terms, 
+search_google <- function(search_terms,
                           base_url = "https://google.com/search?q=") {
   search_url = paste0(base_url,
-                      paste(search_terms, collapse="+"))
+                      paste(URLencode(search_terms, reserved = TRUE),
+                            collapse = "+"))
   utils::browseURL(search_url)
 }
 
-search_github <- function(search_terms, 
+search_github <- function(search_terms,
                           .base_url = "https://github.com/search?q=") {
   search_google(search_terms, .base_url)
 }
