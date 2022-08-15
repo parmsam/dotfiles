@@ -27,6 +27,7 @@ ldpks()
 
 search_google <- function(search_terms,
                           base_url = "https://google.com/search?q=") {
+  search_terms = c("r", search_terms)
   search_url = paste0(base_url,
                       paste( URLencode(search_terms, reserved = TRUE),
                              collapse = "+"))
