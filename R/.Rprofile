@@ -25,16 +25,19 @@ ldpks()
 
 ## search sites -----------------------------------------------------------
 
-search_google <- function(search_terms,
-                          base_url = "https://google.com/search?q=") {
-  search_terms = c("r", search_terms)
+search_google <- function(...,
+                          base_url = "https://google.com/search?q=", 
+                          add_rterm = TRUE) {
+  search_terms = c(...)
+  if(add_rterm) search_terms = c("r", search_terms)
   search_url = paste0(base_url,
                       paste( URLencode(search_terms, reserved = TRUE),
-                             collapse = "+"))
+                            collapse = "+"))
   utils::browseURL(search_url)
 }
 
-search_github <- function(search_terms,
-                          .base_url = "https://github.com/search?q=") {
-  search_google(search_terms, .base_url)
+search_github <- function(...,
+                          .base_url = "https://github.com/search?q=",
+                          .add_rterm = FALSE) {
+  search_google(..., base_url = .base_url, add_rterm = .add_rterm)
 }
