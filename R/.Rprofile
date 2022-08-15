@@ -41,3 +41,16 @@ search_github <- function(...,
                           .add_rterm = FALSE) {
   search_google(..., base_url = .base_url, add_rterm = .add_rterm)
 }
+
+search_stackoverflow <- function(...,
+                          .base_url = "https://stackoverflow.com/search?q=",
+                          .add_rterm = TRUE) {
+  search_google(..., base_url = .base_url, add_rterm = .add_rterm)
+}
+
+search_twitter <- function(...,
+                           .base_url = "https://twitter.com/search?q=",
+                           .add_rterm = FALSE) {
+  search_google(..., base_url = .base_url, add_rterm = .add_rterm)
+}
+
