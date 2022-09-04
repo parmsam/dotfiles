@@ -70,3 +70,7 @@ search_twitter <- function(...,
   search_google(..., base_url = .base_url, add_rterm = .add_rterm)
 }
 
+# ~/.Rprofile
+if (interactive() && requireNamespace("shrtcts", quietly = TRUE)) {
+  shrtcts::add_rstudio_shortcuts(set_keyboard_shortcuts = TRUE)
+}
