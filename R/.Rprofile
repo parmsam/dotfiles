@@ -1,47 +1,69 @@
-# use {pak} to load  helper libraries --------------------------------------
+# install helper libraries --------------------------------------
 if (TRUE) {
-  if (!require("pak")) {
-    install.packages("pak")
-  }
-## install cran packages if needed -----------------------------------------
+  ## install CRAN packages as needed -----------------------------------------
   cranPkgs <- c(
+    "remotes",
     "usethis",
     "fs",
     "styler",
-    "todor",
     "stringr",
-    "beepr"
+    "glue",
+    "beepr",
+    "todor"
   )
-  pak::pkg_install(cranPkgs)
+  install_status <- all(sapply(cranPkgs, require, character.only = TRUE))
+  if (!install_status) {
+    utils::install.packages(cranPkgs, repos = "http://cloud.r-project.org")
+    sapply(cranPkgs, require, character.only = TRUE)
+  }
+  rm(install_status)
 }
 
-## install github packages if needed ---------------------------------------
-if (TRUE) {
+## install github packages as needed ---------------------------------------
+if (FALSE) {
   ghPkgs <- c("dreamRs/prefixer", "dreamRs/esquisse")
-  if (interactive()) {
-    pak::pkg_install(ghPkgs)
+  install_status <- all(
+    sapply(stringr::str_remove_all(ghPkgs, ".*/"),
+           require,
+           character.only = TRUE
+    )
+  )
+  if (interactive() & !install_status) {
+    sapply(ghPkgs, remotes::install_github)
   }
+  rm(install_status)
 }
 
 # setup notification beep/sound -------------------------------------------
 if (TRUE) {
-  options(warning = function() {beepr::beep(1)})
-  options(message = function() {beepr::beep(10)})
-  options(error = function() {beepr::beep(11)}) 
+  options(warning = function() {
+    beepr::beep(1)
+  })
+  options(message = function() {
+    beepr::beep(10)
+  })
+  options(error = function() {
+    beepr::beep(11)
+  })
 }
 
-## load helper libraries ---------------------------------------------------
+# load helper libraries ---------------------------------------------------
 if (TRUE) {
-  lstPkgs <- c(cranPkgs, ghPkgs) |> stringr::str_remove(".*/")
-  sapply(lstPkgs, require, character.only = TRUE)
+  sapply(stringr::str_remove_all(cranPkgs, ".*/"),
+         require,
+         character.only = TRUE
+  )
+  ## see loaded packages ----------------------------------------------------
+  ldpks <- function() {
+    (.packages())
+  }
 }
-
-## see loaded packages ----------------------------------------------------
-ldpks <- function() {
-  (.packages())
+if (FALSE) {
+  sapply(stringr::str_remove_all(ghPkgs, ".*/"),
+         require,
+         character.only = TRUE
+  )
 }
-R.version.string
-ldpks()
 
 # helper functions --------------------------------------------------------
 ## search sites -----------------------------------------------------------
@@ -55,7 +77,7 @@ search_google <- function(...,
   if (tag) {
     prefix <- "[r]"
   }
-
+  
   if (use_error) {
     last_error <- geterrmessage()
     if (is.null(last_error)) {
@@ -63,14 +85,14 @@ search_google <- function(...,
     }
     search_terms <- last_error
   }
-
+  
   if (add_rterm) {
     search_terms <- c(prefix, search_terms)
   }
   search_url <- paste0(
     base_url,
     paste(URLencode(search_terms, reserved = TRUE),
-      collapse = "+"
+          collapse = "+"
     )
   )
   utils::browseURL(search_url)
