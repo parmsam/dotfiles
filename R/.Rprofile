@@ -1,5 +1,5 @@
 # install helper libraries --------------------------------------
-if (TRUE) {
+if (FALSE) {
   ## install CRAN packages as needed -----------------------------------------
   cranPkgs <- c(
     "remotes",
