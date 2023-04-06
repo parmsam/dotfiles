@@ -48,7 +48,7 @@ if (TRUE) {
 }
 
 # load helper libraries ---------------------------------------------------
-if (TRUE) {
+if (FALSE) {
   sapply(stringr::str_remove_all(cranPkgs, ".*/"),
          require,
          character.only = TRUE
