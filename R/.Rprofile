@@ -9,7 +9,8 @@ if (FALSE) {
     "stringr",
     "glue",
     "beepr",
-    "todor"
+    "todor",
+    "codegrip"
   )
   install_status <- all(sapply(cranPkgs, require, character.only = TRUE))
   if (!install_status) {
@@ -21,7 +22,7 @@ if (FALSE) {
 
 ## install github packages as needed ---------------------------------------
 if (FALSE) {
-  ghPkgs <- c("dreamRs/prefixer", "dreamRs/esquisse")
+  ghPkgs <- c("dreamRs/prefixer", "dreamRs/esquisse", "lionel-/codegrip")
   install_status <- all(
     sapply(stringr::str_remove_all(ghPkgs, ".*/"),
            require,
